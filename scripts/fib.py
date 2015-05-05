@@ -1,4 +1,4 @@
-from sys import argv
+from sys import argv, exit
 
 def fib(n):
     if n <= 2:
@@ -7,8 +7,5 @@ def fib(n):
         return fib(n - 1) + fib(n - 2)
 
 _, n, correct_result = argv
-result = fib(int(n))
-if result == int(correct_result):
-    print('OK')
-else:
-    print('{} != {}'.format(result, correct_result))
+if fib(int(n)) != int(correct_result):
+    exit(-1)
