@@ -1,0 +1,14 @@
+pypy ../scripts/simple_threads.py 1 400000000 :: time 0.91s mem 73452kb out 0 in 0 result 0
+pypy ../scripts/simple_threads.py 2 400000000 :: time 0.96s mem 73656kb out 0 in 0 result 0
+pypy ../scripts/simple_threads.py 4 400000000 :: time 0.96s mem 73716kb out 0 in 0 result 0
+pypy ../scripts/simple_threads.py 8 400000000 :: time 0.97s mem 75460kb out 0 in 0 result 0
+
+jython  ../scripts/simple_threads.py 1 400000000 :: time 7.33s mem 275588kb out 0 in 0 result 0
+jython  ../scripts/simple_threads.py 2 400000000 :: time 9.70s mem 270700kb out 0 in 0 result 0
+jython  ../scripts/simple_threads.py 4 400000000 :: time 10.81s mem 267116kb out 0 in 0 result 0
+jython  ../scripts/simple_threads.py 8 400000000 :: time 6.56s mem 275592kb out 0 in 0 result 0
+
+python2 ../scripts/simple_threads.py 1 400000000 :: time 14.69s mem 6560kb out 0 in 0 result 0
+python2 ../scripts/simple_threads.py 2 400000000 :: time 21.18s mem 6744kb out 0 in 0 result 0
+python2 ../scripts/simple_threads.py 4 400000000 :: time 23.12s mem 8540kb out 0 in 0 result 0
+python2 ../scripts/simple_threads.py 8 400000000 :: time 23.14s mem 8484kb out 0 in 0 result 0

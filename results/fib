@@ -1,0 +1,11 @@
+jython -Dpython.cachedir=/home/firemark/jython-cache ../scripts/fib.py 30 832040 :: time 1.54s mem 160212kb out 0 in 0 result 0
+jython -Dpython.cachedir=/home/firemark/jython-cache ../scripts/fib.py 35 9227465 :: time 2.85s mem 245640kb out 0 in 0 result 0
+jython -Dpython.cachedir=/home/firemark/jython-cache ../scripts/fib.py 40 102334155 :: time 16.62s mem 256692kb out 0 in 0 result 0
+
+pypy ../scripts/fib.py 30 832040 :: time 0.13s mem 85504kb out 0 in 0 result 0
+pypy ../scripts/fib.py 35 9227465 :: time 0.29s mem 92696kb out 0 in 0 result 0
+pypy ../scripts/fib.py 40 102334155 :: time 1.55s mem 96944kb out 0 in 0 result 0
+
+python2 ../scripts/fib.py 30 832040 :: time 0.16s mem 6136kb out 0 in 0 result 0
+python2 ../scripts/fib.py 35 9227465 :: time 1.73s mem 6244kb out 0 in 0 result 0
+python2 ../scripts/fib.py 40 102334155 :: time 19.25s mem 6284kb out 0 in 0 result 0
