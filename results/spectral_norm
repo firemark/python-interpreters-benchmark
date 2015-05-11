@@ -1,0 +1,20 @@
+python ../scripts/spectral_norm.py 1 500 1.274224116 :: time 4.25s mem 17304kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 1 1000 1.274224148 :: time 17.17s mem 13688kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 1 1500 1.274224151 :: time 37.80s mem 13680kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 2 500 1.274224116 :: time 2.24s mem 13308kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 2 1000 1.274224148 :: time 8.76s mem 15308kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 2 1500 1.274224151 :: time 19.57s mem 15740kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 4 500 1.274224116 :: time 1.85s mem 13344kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 4 1000 1.274224148 :: time 5.35s mem 13400kb out 0 in 0 result 0
+python ../scripts/spectral_norm.py 4 1500 1.274224151 :: time 15.08s mem 15472kb out 0 in 0 result 0
+
+pypy ../scripts/spectral_norm.py 1 500 1.274224116 :: time 0.60s mem 102792kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 1 1000 1.274224148 :: time 1.20s mem 103332kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 1 1500 1.274224151 :: time 2.21s mem 107924kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 2 500 1.274224116 :: time 0.61s mem 105992kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 2 1000 1.274224148 :: time 0.91s mem 107780kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 2 1500 1.274224151 :: time 1.42s mem 106964kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 4 500 1.274224116 :: time 0.71s mem 106624kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 4 1000 1.274224148 :: time 0.90s mem 106276kb out 0 in 0 result 0
+pypy ../scripts/spectral_norm.py 4 1500 1.274224151 :: time 1.24s mem 107204kb out 0 in 0 result 0
+

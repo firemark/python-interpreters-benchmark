@@ -9,3 +9,7 @@ pypy ../scripts/fib.py 40 102334155 :: time 1.55s mem 96944kb out 0 in 0 result 
 python2 ../scripts/fib.py 30 832040 :: time 0.16s mem 6136kb out 0 in 0 result 0
 python2 ../scripts/fib.py 35 9227465 :: time 1.73s mem 6244kb out 0 in 0 result 0
 python2 ../scripts/fib.py 40 102334155 :: time 19.25s mem 6284kb out 0 in 0 result 0
+
+../bin/pyston ../scripts/fib.py 30 832040 :: time 0.07s mem 23608kb out 0 in 8 result 0
+../bin/pyston ../scripts/fib.py 35 9227465 :: time 0.34s mem 27256kb out 0 in 0 result 0
+../bin/pyston ../scripts/fib.py 40 102334155 :: time 3.39s mem 36520kb out 0 in 0 result 0

@@ -1,0 +1,17 @@
+pypy ../scripts/mandelbrot.py 1600 1200 32 :: time 0.89s mem 149936kb out 0 in 0 result 0
+pypy ../scripts/mandelbrot.py 1600 1200 64 :: time 1.21s mem 146056kb out 0 in 0 result 0
+pypy ../scripts/mandelbrot.py 1600 1200 128 :: time 1.88s mem 146676kb out 0 in 0 result 0
+pypy ../scripts/mandelbrot_classic.py 1600 1200 32 :: time 0.89s mem 150104kb out 0 in 0 result 0
+pypy ../scripts/mandelbrot_classic.py 1600 1200 64 :: time 1.26s mem 146276kb out 0 in 0 result 0
+pypy ../scripts/mandelbrot_classic.py 1600 1200 128 :: time 1.96s mem 146136kb out 0 in 0 result 0
+
+python2 ../scripts/mandelbrot.py 1600 1200 32 :: time 5.52s mem 21060kb out 0 in 0 result 0
+python2 ../scripts/mandelbrot.py 1600 1200 64 :: time 8.31s mem 21188kb out 0 in 0 result 0
+python2 ../scripts/mandelbrot.py 1600 1200 128 :: time 12.84s mem 21076kb out 0 in 0 result 0
+
+jython27 -Dpython.cachedir=/tmp/jython ../scripts/mandelbrot.py 1600 1200 32 :: time 19.49s mem 308768kb out 8 in 0 result 0
+jython27 -Dpython.cachedir=/tmp/jython ../scripts/mandelbrot.py 1600 1200 64 :: time 28.33s mem 309316kb out 8 in 0 result 0
+jython27 -Dpython.cachedir=/tmp/jython ../scripts/mandelbrot.py 1600 1200 128 :: time 44.61s mem 307688kb out 8 in 0 result 0
+
+# pyston AttributeError: 'complex' object has no attribute '__abs__'
+
