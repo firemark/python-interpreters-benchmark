@@ -86,12 +86,22 @@ function install_pypystm {
 }
 
 function install_jython {
-    if [ -x jython ]; then return; fi;
+    if [ -x bin/jython ]; then return; fi;
     echo install jython
     cd $build_dir
     wget http://search.maven.org/remotecontent?filepath=org/python/jython-standalone/2.7.0/jython-standalone-2.7.0.jar -O jython.jar
     echo -e \#\!/bin/sh\\njava -jar $build_dir/jython.jar '$@' > $repo_dir/bin/jython
     chmod +x $repo_dir/bin/jython
+}
+
+function install_ironpython {
+    if [ -x bin/iron ]; then return; fi;
+    echo install iron python
+    cd $repo_dir/tmp
+    wget https://s3.amazonaws.com/pydevbuilds2/IronPython-2.7.4.zip -O iron-python.zip
+    unzip iron-python.zip -d $build_dir
+    echo -e \#\!/bin/sh\\nmono $build_dir/IronPython-2.7.4/ipy64.exe '$@' > $repo_dir/bin/iron
+    chmod +x $repo_dir/bin/iron
 }
 
 install_pyston
@@ -100,3 +110,4 @@ install_cpython
 install_pypy
 install_pypystm
 install_jython
+install_ironpython
