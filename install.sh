@@ -30,7 +30,7 @@ function install_cpython {
     cd $repo_dir
     if [ -h bin/cpython ]; then return; fi
     echo install cpython
-    mkdir $build_dir/cpython
+    mkd $build_dir/cpython
     cd tmp
     if [ ! -d cpython ]
     then
@@ -41,13 +41,13 @@ function install_cpython {
     ./configure --prefix=$build_dir/cpython/
     make -j7
     make install
-    ln -s ../$build_dir/cpython/bin/python2.7 $repo_dir/bin/cpython
+    ln -s $build_dir/cpython/bin/python2.7 $repo_dir/bin/cpython
 }
 
 function install_spython {
     if [ -h bin/spython ]; then return; fi
     echo install spython
-    mkd $build_dir/build/spython
+    mkd $build_dir/spython
     cd $repo_dir/tmp
     if [ ! -d spython ]
     then
@@ -58,7 +58,7 @@ function install_spython {
     ./configure --prefix=$build_dir/spython/
     make -j7
     make install
-    ln -s ../$build_dir/spython/bin/python2.7 $repo_dir/bin/spython
+    ln -s $build_dir/spython/bin/python2.7 $repo_dir/bin/spython
 }
 
 function install_pypy {
@@ -77,12 +77,21 @@ function install_pypy {
 
 function install_pypystm {
     if [ -h bin/pypy-stm ]; then return; fi
-    cd $repo_dir/tmp
     echo install pypy stm
+    cd $repo_dir/tmp
     wget https://bitbucket.org/pypy/pypy/downloads/pypy-stm-2.5.1-linux64.tar.bz2 -O pypy-stm.tar.bz2
     tar -xjf pypy-stm.tar.bz2 -C $build_dir/pypy-stm
     cd $build_dir/pypy-stm/*
     ln -s $(pwd)/bin/pypy-stm $repo_dir/bin/pypy-stm
+}
+
+function install_jython {
+    if [ -x jython ]; then return; fi;
+    echo install jython
+    cd $build_dir
+    wget http://search.maven.org/remotecontent?filepath=org/python/jython-standalone/2.7.0/jython-standalone-2.7.0.jar -O jython.jar
+    echo -e \#\!/bin/sh\\njava -jar $build_dir/jython.jar '$@' > $repo_dir/bin/jython
+    chmod +x $repo_dir/bin/jython
 }
 
 install_pyston
@@ -90,3 +99,4 @@ install_spython
 install_cpython
 install_pypy
 install_pypystm
+install_jython
