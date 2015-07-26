@@ -8,6 +8,7 @@ function mkd {
 mkd bin
 mkd build
 mkd tmp
+mkd scripts/data
 
 repo_dir=$(pwd)
 build_dir=$repo_dir/build
@@ -104,6 +105,12 @@ function install_ironpython {
     chmod +x $repo_dir/bin/iron
 }
 
+function download_data {
+    cd $repo_dir/scripts/data
+    wget http://people.unipmn.it/manzini/lightweight/corpus/howto.bz2 -O howto.bz2
+    bzip2 -d howto.bz2
+}
+
 install_pyston
 install_spython
 install_cpython
@@ -111,3 +118,5 @@ install_pypy
 install_pypystm
 install_jython
 install_ironpython
+
+download_data
