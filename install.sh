@@ -68,12 +68,11 @@ function install_pypy {
     cd $repo_dir/tmp
     if [ ! -d pypy ]
     then
-        wget https://bitbucket.org/pypy/pypy/downloads/pypy-2.6.0-src.zip -O pypy.zip
-        unzip pypy.zip -d pypy
+        wget https://bitbucket.org/pypy/pypy/downloads/pypy-2.6.0-linux64.tar.bz2  -O pypy.tar.bz2
+        tar -xjf pypy.tar.bz2 -C $build_dir/pypy
     fi
-    cd pypy/*/
-    $PYTHON rpython/bin/rpython -Ojit --make-jobs=7 pypy/goal/targetpypystandalone.py
-    ln -s $(pwd)/pypy-c $repo_dir/bin/pypy
+    cd $build_dir/pypy/*
+    ln -s $(pwd)/bin/pypy $repo_dir/bin/pypy
 }
 
 function install_pypystm {
