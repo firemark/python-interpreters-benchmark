@@ -9,6 +9,7 @@ mkd bin
 mkd build
 mkd tmp
 mkd scripts/data
+mkd venvs
 
 repo_dir=$(pwd)
 build_dir=$repo_dir/build
@@ -42,7 +43,9 @@ function install_cpython {
     ./configure --prefix=$build_dir/cpython/
     make -j7
     make install
-    ln -s $build_dir/cpython/bin/python2.7 $repo_dir/bin/cpython
+    virtualenv -p $build_dir/cpython/bin/python2.7 $repo_dir/venvs/cpython
+    ln -s $repo_dir/venvs/cpython/bin/python2.7 $repo_dir/bin/cpython
+    $repo_dir/bin/cpython -m pip install numpy
 }
 
 function install_spython {
@@ -59,7 +62,9 @@ function install_spython {
     ./configure --prefix=$build_dir/spython/
     make -j7
     make install
-    ln -s $build_dir/spython/bin/python2.7 $repo_dir/bin/spython
+    virtualenv -p $build_dir/spython/bin/python2.7 $repo_dir/venvs/spython
+    ln -s $repo_dir/venvs/spython/bin/python2.7 $repo_dir/bin/spython
+    $repo_dir/bin/spython -m pip install numpy
 }
 
 function install_pypy {
@@ -71,18 +76,37 @@ function install_pypy {
         wget https://bitbucket.org/pypy/pypy/downloads/pypy-2.6.0-linux64.tar.bz2  -O pypy.tar.bz2
         tar -xjf pypy.tar.bz2 -C $build_dir/pypy
     fi
+    if [ ! -d pypy-numpy ]
+    then
+        wget https://bitbucket.org/pypy/numpy/get/pypy-2.6.0.zip -O pypy-numpy.zip
+        unzip pypy-numpy.zip -d pypy-numpy
+    fi
     cd $build_dir/pypy/*
-    ln -s $(pwd)/bin/pypy $repo_dir/bin/pypy
+    virtualenv -p $(pwd)/bin/pypy $repo_dir/venvs/pypy
+    ln -s $repo_dir/venvs/pypy/bin/pypy $repo_dir/bin/pypy
+    cd $repo_dir/tmp/pypy-numpy/*
+    $repo_dir/bin/pypy setup.py install
 }
 
 function install_pypystm {
     if [ -h bin/pypy-stm ]; then return; fi
     echo install pypy stm
     cd $repo_dir/tmp
-    wget https://bitbucket.org/pypy/pypy/downloads/pypy-stm-2.5.1-linux64.tar.bz2 -O pypy-stm.tar.bz2
-    tar -xjf pypy-stm.tar.bz2 -C $build_dir/pypy-stm
+    if [ ! -d pypy-stm ]
+    then
+        wget https://bitbucket.org/pypy/pypy/downloads/pypy-stm-2.5.1-linux64.tar.bz2 -O pypy-stm.tar.bz2
+        tar -xjf pypy-stm.tar.bz2 -C $build_dir/pypy-stm
+    fi
+    if [ ! -d pypy-numpy ]
+    then
+        wget https://bitbucket.org/pypy/numpy/get/pypy-2.6.0.zip -O pypy-numpy.zip
+        unzip pypy-numpy.zip -d pypy-numpy
+    fi
     cd $build_dir/pypy-stm/*
-    ln -s $(pwd)/bin/pypy-stm $repo_dir/bin/pypy-stm
+    virtualenv -p $(pwd)/bin/pypy-stm $repo_dir/venvs/pypy-stm
+    ln -s $repo_dir/venvs/pypy/bin/pypy $repo_dir/bin/pypy-stm
+    cd $repo_dir/tmp/pypy-numpy/*
+    $repo_dir/bin/pypy-stm setup.py install
 }
 
 function install_jython {
@@ -90,8 +114,10 @@ function install_jython {
     echo install jython
     cd $build_dir
     wget http://search.maven.org/remotecontent?filepath=org/python/jython-standalone/2.7.0/jython-standalone-2.7.0.jar -O jython.jar
+    wget https://github.com/Stewori/JyNI/releases/download/v2.7-alpha.2.3/JyNI-2.7-alpha.2.3.jar -O jyni.jar
     echo -e \#\!/bin/sh\\njava -jar $build_dir/jython.jar '$@' > $repo_dir/bin/jython
-    chmod +x $repo_dir/bin/jython
+    echo -e \#\!/bin/sh\\njava -jar $build_dir/jython.jar:$build_dir/jyni.jar '$@' > $repo_dir/bin/jython-jyni
+    chmod +x $repo_dir/bin/jython $repo_dir/bin/jython-jyni
 }
 
 function install_ironpython {
