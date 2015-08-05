@@ -5,6 +5,9 @@ function mkd {
     if [ ! -d $1 ]; then mkdir $1; fi
 }
 
+PACKAGES_TO_DOWNLOAD="django flask pyramid autobahn[twisted]"
+PACKAGES_TO_DOWNLOAD="$PACKAGES_TO_DOWNLOAD tornado uwsgi"
+
 mkd bin
 mkd build
 mkd tmp
@@ -44,8 +47,9 @@ function install_cpython {
     make -j7
     make install
     virtualenv -p $build_dir/cpython/bin/python2.7 $repo_dir/venvs/cpython
-    ln -s $repo_dir/venvs/cpython/bin/python2.7 $repo_dir/bin/cpython
-    $repo_dir/bin/cpython -m pip install numpy
+    py=$repo_dir/bin/cpython
+    ln -s $repo_dir/venvs/cpython/bin/python2.7 $py
+    $py -m pip install numpy $PACKAGES_TO_DOWNLOAD
 }
 
 function install_spython {
@@ -63,8 +67,9 @@ function install_spython {
     make -j7
     make install
     virtualenv -p $build_dir/spython/bin/python2.7 $repo_dir/venvs/spython
-    ln -s $repo_dir/venvs/spython/bin/python2.7 $repo_dir/bin/spython
-    $repo_dir/bin/spython -m pip install numpy
+    py=$repo_dir/bin/spython
+    ln -s $repo_dir/venvs/spython/bin/python2.7 $py
+    $py -m pip install numpy $PACKAGES_TO_DOWNLOAD
 }
 
 function install_pypy {
@@ -83,9 +88,10 @@ function install_pypy {
     fi
     cd $build_dir/pypy/*
     virtualenv -p $(pwd)/bin/pypy $repo_dir/venvs/pypy
-    ln -s $repo_dir/venvs/pypy/bin/pypy $repo_dir/bin/pypy
+    py=$repo_dir/bin/pypy
+    ln -s $repo_dir/venvs/pypy/bin/pypy $py
     cd $repo_dir/tmp/pypy-numpy/*
-    $repo_dir/bin/pypy setup.py install
+    $py -m pip install $PACKAGES_TO_DOWNLOAD
 }
 
 function install_pypystm {
@@ -104,9 +110,11 @@ function install_pypystm {
     fi
     cd $build_dir/pypy-stm/*
     virtualenv -p $(pwd)/bin/pypy-stm $repo_dir/venvs/pypy-stm
-    ln -s $repo_dir/venvs/pypy/bin/pypy $repo_dir/bin/pypy-stm
+    py=$repo_dir/bin/pypy-stm
+    ln -s $repo_dir/venvs/pypy/bin/pypy $py
     cd $repo_dir/tmp/pypy-numpy/*
-    $repo_dir/bin/pypy-stm setup.py install
+    $py setup.py install
+    $py -m pip install $PACKAGES_TO_DOWNLOAD
 }
 
 function install_jython {
