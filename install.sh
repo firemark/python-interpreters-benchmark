@@ -7,6 +7,7 @@ function mkd {
 
 PACKAGES_TO_DOWNLOAD="django flask pyramid autobahn[twisted]"
 PACKAGES_TO_DOWNLOAD="$PACKAGES_TO_DOWNLOAD tornado uwsgi"
+PACKAGES_TO_DOWNLOAD_JYTHON="django flask pyramid markupsafe"
 
 mkd bin
 mkd build
@@ -53,10 +54,11 @@ function install_cpython {
 }
 
 function install_spython {
+    cd $repo_dir
     if [ -h bin/spython ]; then return; fi
     echo install spython
     mkd $build_dir/spython
-    cd $repo_dir/tmp
+    cd tmp
     if [ ! -d spython ]
     then
         wget https://bitbucket.org/stackless-dev/stackless/get/v2.7.9.zip -O spython.zip
@@ -73,9 +75,10 @@ function install_spython {
 }
 
 function install_pypy {
+    cd $repo_dir
     if [ -h bin/pypy ]; then return; fi
     echo install pypy
-    cd $repo_dir/tmp
+    cd tmp
     if [ ! -d pypy ]
     then
         wget https://bitbucket.org/pypy/pypy/downloads/pypy-2.6.0-linux64.tar.bz2  -O pypy.tar.bz2
@@ -95,9 +98,10 @@ function install_pypy {
 }
 
 function install_pypystm {
+    cd $repo_dir
     if [ -h bin/pypy-stm ]; then return; fi
     echo install pypy stm
-    cd $repo_dir/tmp
+    cd tmp
     if [ ! -d pypy-stm ]
     then
         wget https://bitbucket.org/pypy/pypy/downloads/pypy-stm-2.5.1-linux64.tar.bz2 -O pypy-stm.tar.bz2
@@ -118,20 +122,31 @@ function install_pypystm {
 }
 
 function install_jython {
-    if [ -x bin/jython ]; then return; fi;
+    cd $repo_dir
+    if [ -h bin/jython ]; then return; fi;
     echo install jython
-    cd $build_dir
-    wget http://search.maven.org/remotecontent?filepath=org/python/jython-standalone/2.7.0/jython-standalone-2.7.0.jar -O jython.jar
+    cd tmp
+    if [ ! -e jython-installer.jar ]
+    then
+        wget http://search.maven.org/remotecontent?filepath=org/python/jython-installer/2.7.0/jython-installer-2.7.0.jar -O jython-installer.jar
+    fi
     wget https://github.com/Stewori/JyNI/releases/download/v2.7-alpha.2.3/JyNI-2.7-alpha.2.3.jar -O jyni.jar
-    echo -e \#\!/bin/sh\\njava -jar $build_dir/jython.jar '$@' > $repo_dir/bin/jython
-    echo -e \#\!/bin/sh\\njava -jar $build_dir/jython.jar:$build_dir/jyni.jar '$@' > $repo_dir/bin/jython-jyni
-    chmod +x $repo_dir/bin/jython $repo_dir/bin/jython-jyni
+    if [ ! -d $build_dir/jython ] 
+    then
+        mkdir $build_dir/jython
+        java -jar jython-installer.jar -s -d $build_dir/jython -t standard
+    fi
+    py=$repo_dir/bin/jython
+    ln -s $build_dir/jython/bin/jython $py
+    $py -m pip install $PACKAGES_TO_DOWNLOAD_JYTHON
+    #chmod +x $repo_dir/bin/jython $repo_dir/bin/jython-jyni
 }
 
 function install_ironpython {
+    cd $repo_dir
     if [ -x bin/iron ]; then return; fi;
     echo install iron python
-    cd $repo_dir/tmp
+    cd tmp
     wget https://s3.amazonaws.com/pydevbuilds2/IronPython-2.7.4.zip -O iron-python.zip
     unzip iron-python.zip -d $build_dir
     echo -e \#\!/bin/sh\\nmono $build_dir/IronPython-2.7.4/ipy64.exe '$@' > $repo_dir/bin/iron
