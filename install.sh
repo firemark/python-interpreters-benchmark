@@ -5,10 +5,6 @@ function mkd {
     if [ ! -d $1 ]; then mkdir $1; fi
 }
 
-PACKAGES_TO_DOWNLOAD="django flask pyramid autobahn[twisted]"
-PACKAGES_TO_DOWNLOAD="$PACKAGES_TO_DOWNLOAD tornado uwsgi"
-PACKAGES_TO_DOWNLOAD_JYTHON="django flask pyramid markupsafe"
-
 mkd bin
 mkd build
 mkd tmp
@@ -50,7 +46,8 @@ function install_cpython {
     virtualenv -p $build_dir/cpython/bin/python2.7 $repo_dir/venvs/cpython
     py=$repo_dir/bin/cpython
     ln -s $repo_dir/venvs/cpython/bin/python2.7 $py
-    $py -m pip install numpy $PACKAGES_TO_DOWNLOAD
+    $py -m pip install numpy 
+    $py -m pip install -r $repo_dir/req.txt
 }
 
 function install_spython {
@@ -71,7 +68,8 @@ function install_spython {
     virtualenv -p $build_dir/spython/bin/python2.7 $repo_dir/venvs/spython
     py=$repo_dir/bin/spython
     ln -s $repo_dir/venvs/spython/bin/python2.7 $py
-    $py -m pip install numpy $PACKAGES_TO_DOWNLOAD
+    $py -m pip install numpy
+    $py -m pip install -r $repo_dir/req.txt
 }
 
 function install_pypy {
@@ -94,7 +92,7 @@ function install_pypy {
     py=$repo_dir/bin/pypy
     ln -s $repo_dir/venvs/pypy/bin/pypy $py
     cd $repo_dir/tmp/pypy-numpy/*
-    $py -m pip install $PACKAGES_TO_DOWNLOAD
+    $py -m pip install -r $repo_dir/req.txt
 }
 
 function install_pypystm {
@@ -118,7 +116,7 @@ function install_pypystm {
     ln -s $repo_dir/venvs/pypy/bin/pypy $py
     cd $repo_dir/tmp/pypy-numpy/*
     $py setup.py install
-    $py -m pip install $PACKAGES_TO_DOWNLOAD
+    $py -m pip install -r $repo_dir/req.txt
 }
 
 function install_jython {
@@ -138,7 +136,7 @@ function install_jython {
     fi
     py=$repo_dir/bin/jython
     ln -s $build_dir/jython/bin/jython $py
-    $py -m pip install $PACKAGES_TO_DOWNLOAD_JYTHON
+    $py -m pip install -r $repo_dir/req_jython.txt
     #chmod +x $repo_dir/bin/jython $repo_dir/bin/jython-jyni
 }
 
@@ -155,8 +153,11 @@ function install_ironpython {
 
 function download_data {
     cd $repo_dir/scripts/data
-    wget http://people.unipmn.it/manzini/lightweight/corpus/howto.bz2 -O howto.bz2
-    bzip2 -d howto.bz2
+    if [ ! -e howto.bz2 ]
+    then
+        wget http://people.unipmn.it/manzini/lightweight/corpus/howto.bz2 -O howto.bz2
+        bzip2 -d howto.bz2
+    fi
 }
 
 install_pyston
