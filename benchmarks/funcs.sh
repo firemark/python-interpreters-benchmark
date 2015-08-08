@@ -23,3 +23,16 @@ function uwsgi {
         $WSGIARG &> /dev/null&
     cd - > /dev/null
 }
+
+function gunicorn {
+    cd ..
+    venvs/$INTERPRETER/bin/gunicorn \
+        --workers 4 \
+        --chdir scripts/ \
+        --bind 127.0.0.1:5000 $1 &> /dev/null&
+    cd - > /dev/null
+}
+
+function run_wrk {
+    wrk -t8 -c100 -d30s --latency --timeout 2s http://127.0.0.1:5000/
+}

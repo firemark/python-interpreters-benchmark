@@ -136,6 +136,7 @@ function install_jython {
     fi
     py=$repo_dir/bin/jython
     ln -s $build_dir/jython/bin/jython $py
+    ln -s $build_dir/jython $repo_dir/venvs/jython
     $py -m pip install -r $repo_dir/req_jython.txt
     #chmod +x $repo_dir/bin/jython $repo_dir/bin/jython-jyni
 }
