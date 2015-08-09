@@ -2,6 +2,6 @@
 source ./funcs.sh
 set -e
 
-gunicorn flask_serv:app
+uwsgi django_serv.wsgi scripts/django_serv/
 sleep 4
 run_wrk
