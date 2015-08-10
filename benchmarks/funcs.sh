@@ -5,7 +5,7 @@ set -e
 string_format="%C :: time %es mem %Mkb out %O in %I result %x"
 function measure {
     cd ../bin 
-    /usr/bin/time -f "$string_format" -o /dev/tty ./$INTERPRETER ../scripts/$@ &> tmp/log
+    /usr/bin/time -f "$string_format" -o /dev/tty ./$INTERPRETER ../scripts/$@ &> ../tmp/log
     cd - > /dev/null
 }
 
