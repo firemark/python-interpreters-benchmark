@@ -5,3 +5,4 @@ scripts/data/
 venvs/
 *.pyc
 __pycache__
+*$py.class
