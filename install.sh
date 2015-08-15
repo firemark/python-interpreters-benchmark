@@ -146,9 +146,9 @@ function install_ironpython {
     if [ -x bin/iron ]; then return; fi;
     echo install iron python
     cd tmp
-    wget https://s3.amazonaws.com/pydevbuilds2/IronPython-2.7.4.zip -O iron-python.zip
+    wget https://github.com/IronLanguages/main/releases/download/ipy-2.7.5/IronPython-2.7.5.zip -O iron-python.zip
     unzip iron-python.zip -d $build_dir
-    echo -e \#\!/bin/sh\\nmono $build_dir/IronPython-2.7.4/ipy64.exe '$@' > $repo_dir/bin/iron
+    echo -e \#\!/bin/sh\\nmono $build_dir/IronPython-2.7.5/ipy64.exe -X:Frames '$@' > $repo_dir/bin/iron
     chmod +x $repo_dir/bin/iron
 }
 
