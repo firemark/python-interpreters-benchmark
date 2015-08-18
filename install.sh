@@ -113,7 +113,7 @@ function install_pypystm {
     cd $build_dir/pypy-stm/*
     virtualenv -p $(pwd)/bin/pypy-stm $repo_dir/venvs/pypy-stm
     py=$repo_dir/bin/pypy-stm
-    ln -s $repo_dir/venvs/pypy/bin/pypy $py
+    ln -s $repo_dir/venvs/pypy-stm/bin/pypy $py
     cd $repo_dir/tmp/pypy-numpy/*
     $py setup.py install
     $py -m pip install -r $repo_dir/req.txt

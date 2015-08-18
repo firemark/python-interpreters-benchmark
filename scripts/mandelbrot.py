@@ -11,9 +11,13 @@ def seek_point(x, y):
     for i in range(n):
         z = z * z + p
         if abs(z) >= 2.0:
-            return i
+            break
+    return i
 
 l = []
 for y in xrange(height):
     for x in xrange(width):
         l.append(seek_point(x, y))
+
+with open('/tmp/mandelbrot-image-%s' % n, 'w') as f:
+    f.write(','.join(str(x) for x in l))

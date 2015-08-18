@@ -24,6 +24,6 @@ if __name__ == '__main__':
         stop = time.clock()
         times.append(stop - start)
     print "Iteration times"
-    print ",".join(str(i) for i in times)
+    print ",".join(str(i * 10**3) for i in times)
     print "X range"
     print minimum, maximum
