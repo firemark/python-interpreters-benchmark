@@ -4,3 +4,4 @@ Flask==0.10.1
 tornado==4.2.1
 MarkupSafe==0.23
 gunicorn==19.3.0
+pyramid==1.5.7

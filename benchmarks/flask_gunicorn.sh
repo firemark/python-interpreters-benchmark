@@ -3,5 +3,5 @@ source ./funcs.sh
 set -e
 
 gunicorn flask_serv:app
-sleep 4
+sleep 10
 run_wrk

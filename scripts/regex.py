@@ -1,4 +1,3 @@
-from threading import Thread
 from re import compile as re_compile
 from os import path
 
@@ -16,14 +15,8 @@ with open(data_path) as fp:
 
 output = [None] * len(variants)
 
-def func(i, rex):
+for i, rex in enumerate(variants):
     output[i] = len(rex.findall(data))
-
-threads = [Thread(target=func, args=(i, x)) for i, x in enumerate(variants)]
-for t in threads:
-    t.start()
-for t in threads:
-    t.join()
 
 if output != [17817, 15427, 673, 33241]:
     exit(-1)

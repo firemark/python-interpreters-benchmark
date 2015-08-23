@@ -3,5 +3,5 @@ source ./funcs.sh
 set -e
 
 ../bin/$INTERPRETER ../scripts/flask_serv.py &> ../tmp/log&
-sleep 4
+sleep 10
 run_wrk
